@@ -43,6 +43,7 @@ document.querySelectorAll('[data-copy]').forEach(function(b){
   if(!groups.length)return;
   var cards=[].slice.call(document.querySelectorAll('[data-project-card]'));
   var empty=document.querySelector('[data-project-empty]');
+  var grid=document.querySelector('[data-project-grid]');
   var params=new URLSearchParams(location.search),initial=params.get('category')||'all';
   var allowed=['all','sites','apps','print','presentations'];
   if(allowed.indexOf(initial)===-1)initial='all';
@@ -57,12 +58,15 @@ document.querySelectorAll('[data-copy]').forEach(function(b){
   });
 
   function apply(filter,moveFocus){
-    var visible=0;
+    var visibleCards=[];
     cards.forEach(function(card){
       var show=filter==='all'||card.getAttribute('data-category')===filter;
       card.hidden=!show;
-      if(show)visible++;
+      card.removeAttribute('data-layout');
+      if(show)visibleCards.push(card);
     });
+    visibleCards.forEach(function(card,index){card.setAttribute('data-layout',index+1)});
+    if(grid)grid.setAttribute('data-visible-count',visibleCards.length);
     groups.forEach(function(group){
       group.querySelectorAll('[data-project-filter]').forEach(function(button){
         var active=button.getAttribute('data-project-filter')===filter;
@@ -71,7 +75,7 @@ document.querySelectorAll('[data-copy]').forEach(function(b){
         if(active&&moveFocus)button.focus();
       });
     });
-    if(empty)empty.hidden=visible!==0;
+    if(empty)empty.hidden=visibleCards.length!==0;
     if(history.replaceState){
       var url=new URL(location.href);
       if(filter==='all')url.searchParams.delete('category');else url.searchParams.set('category',filter);

@@ -95,6 +95,14 @@ a:hover>.go,a:hover .go{transform:rotate(-45deg)}
 .proj.accent p{color:#14246b}
 [hidden]{display:none!important}
 .project-tools{padding:10px;overflow:visible}
+.project-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap);grid-column:1/-1;grid-auto-flow:row}
+.project-grid[data-visible-count="1"] .proj{grid-column:1/-1;--ar:46%}
+.project-grid[data-visible-count="2"] .proj{grid-column:span 6;--ar:72%}
+.project-grid[data-visible-count="3"] .proj{grid-column:span 4;--ar:70%}
+.project-grid[data-visible-count="4"] .proj{grid-column:span 6;--ar:72%}
+.project-grid[data-visible-count="5"] .proj[data-layout="1"],.project-grid[data-visible-count="5"] .proj[data-layout="2"]{grid-column:span 6;--ar:72%}
+.project-grid[data-visible-count="5"] .proj[data-layout="3"],.project-grid[data-visible-count="5"] .proj[data-layout="4"],.project-grid[data-visible-count="5"] .proj[data-layout="5"]{grid-column:span 4;--ar:70%}
+.project-grid[data-visible-count="6"] .proj{grid-column:span 4;--ar:70%}
 .project-filters{display:flex;flex-wrap:wrap;gap:8px}
 .project-filter{border:0;border-radius:99px;padding:11px 16px;background:rgba(7,8,14,.07);color:var(--ink);font:600 14px/1 var(--fs);cursor:pointer;transition:background .2s,color .2s,transform .2s}
 .project-filter span{display:inline-grid;place-items:center;min-width:24px;height:24px;margin-left:8px;padding:0 7px;border-radius:99px;background:rgba(7,8,14,.09);font-size:12px}
@@ -173,12 +181,15 @@ a:hover>.go,a:hover .go{transform:rotate(-45deg)}
   .nav ul a{padding:14px 18px;font-size:18px;background:#14172a;color:#fff}
   .bento{grid-template-columns:repeat(2,1fr)}
   .c4,.c5,.c7,.c8,.c12{grid-column:span 2}
+  .project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .project-grid .proj{grid-column:1/-1!important}
   .c4.sm{grid-column:span 1}
   .r2{grid-row:auto}
     }
 /* телефон */
 @media(max-width:640px){
   .bento{grid-template-columns:1fr}
+  .project-grid{grid-template-columns:1fr}
   .c4,.c5,.c7,.c8,.c12,.c4.sm{grid-column:auto}
   .hero{min-height:440px}
   .hero h1{font-size:clamp(36px,12vw,70px)}
